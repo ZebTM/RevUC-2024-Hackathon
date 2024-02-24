@@ -1,8 +1,6 @@
-import Navbar from '../comps/navbar'
 export default function medical_form() {
     return (
       <div>
-        <Navbar />
         <form>
           <label for="fname">First Name: </label> 
           <br></br>

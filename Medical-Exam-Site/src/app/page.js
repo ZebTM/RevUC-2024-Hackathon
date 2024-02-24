@@ -1,9 +1,8 @@
-import Navbar from '../comps/navbar'
-import './globals.css'
+//import Navbar from '.../comps/navbar';
 export default function() {
   return (
     <div className>
-      <Navbar />
+      {/*<Navbar />*/}
       <p className="text-red-700"> home page </p>
     </div>
   );
