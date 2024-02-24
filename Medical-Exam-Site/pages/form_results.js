@@ -1,6 +1,10 @@
-export default function Form_Results() {
+import Navbar from '../comps/navbar'
+export default function form_results() {
     return (
-      <p> Put stuff here </p>
+      <div>
+        <Navbar />
+        <p> form results page </p>
+      </div>
     );
   }
   

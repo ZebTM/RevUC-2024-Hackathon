@@ -1,6 +1,10 @@
-export default function Medical_Form() {
+import Navbar from '../comps/navbar'
+export default function medical_form() {
     return (
-      <p> Put stuff here </p>
+      <div>
+        <Navbar />
+        <p> medical form page </p>
+      </div>
     );
   }
   
