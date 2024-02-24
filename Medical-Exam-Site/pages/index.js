@@ -1,9 +1,10 @@
 import Navbar from '../comps/navbar'
+import './globals.css'
 export default function() {
   return (
-    <div className="flex p-4 pl-16 w-full items-center bg-zinc-950">
+    <div className>
       <Navbar />
-      <p> home page </p>
+      <p className="text-red-700"> home page </p>
     </div>
   );
 }
