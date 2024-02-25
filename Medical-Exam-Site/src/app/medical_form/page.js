@@ -52,6 +52,12 @@ export default function MedicalForm() {
   const [ filePath, setPath ] = useState('');
   //let headers = await createHeader();
   //let retval = await fetch("http://10.11.191.67:3001/status");
+  // const [ symptomList, setSymptomList ] = useState( [] )
+  // const [ notes, setNotes ] = useState('')
+  // const [ filePath, setPath ] = useState('');
+
+
+
   return (
     <div className="flex justify-center pt-8 pb-8">
       <form className="w-1/2 bg-slate-700 pl-14 pr-14 pt-4 rounded-xl">

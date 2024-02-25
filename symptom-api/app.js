@@ -75,17 +75,17 @@ app.post('/symptoms', ( request, response) => {
 	// patient_id UUID,
 	// notes TEXT,
 	// img_path TEXT
-    let { patient_id, notes, img_path, symptoms } = request.body;
+    let { notes, img_path, symptoms } = request.body;
     let id = crypto.randomUUID();
     let created_at = new Date();
-    query = 'INSERT INTO symptoms (id, created_at, patient_id, notes, img_path, symptoms ) VALUES ($1, $2, $3, $4, $5, $6 )';
+    query = 'INSERT INTO symptoms (id, created_at, notes, img_path, symptoms ) VALUES ($1, $2, $3, $4, $5  )';
 
-    pool.query(query, [id, created_at, patient_id, notes, img_path, symptoms ], (error, results ) => {
+    pool.query(query, [id, created_at, notes, img_path, symptoms ], (error, results ) => {
         if ( error ) {
             throw error
         }
 
-        response.status(200).json({ "id": id, "created_at": created_at, "patient_id": patient_id, "symptoms": symptoms, "notes": notes, "img_path": img_path})
+        response.status(200).json({ "id": id, "created_at": created_at, "symptoms": symptoms, "notes": notes, "img_path": img_path})
     })
     
 })
