@@ -1,0 +1,17 @@
+{
+  "name": "symptom-api",
+  "version": "1.0.0",
+  "description": "API for Symptom Reporter for Rec UC Hackathon",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "pg": "^8.11.3"
+  }
+}
