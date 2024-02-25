@@ -1,8 +1,12 @@
+"use client"
+import React from 'react';
+
 export default function form_results() {
-    return (
-      <div>
-        <p> form results page </p>
-      </div>
-    );
-  }
+
+  return (
+    <div>
+      <h2>Results</h2>
+    </div>
+  );
+}
   

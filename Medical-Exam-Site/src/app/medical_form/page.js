@@ -1,3 +1,5 @@
+'use client'
+import { useState } from 'react';
 // import { NextResponse } from 'next/server';
 // import { getAccessToken, withApiAuthRequired } from '@auth0/nextjs-auth0';
 
@@ -19,6 +21,12 @@
 export default async function MedicalForm() {
   //let headers = await createHeader();
   //let retval = await fetch("http://10.11.191.67:3001/status");
+  const [ symptomList, setSymptomList ] = useState( [] )
+  const [ notes, setNotes ] = useState('')
+  const [ filePath, setPath ] = useState('');
+
+
+
   return (
     <div className="flex justify-center pt-8 pb-8">
       <form className="w-1/2 bg-slate-800 pl-14 pr-14 pt-4 rounded-xl">
@@ -35,7 +43,7 @@ export default async function MedicalForm() {
         <input id="file" name="file" type="file" />
         <br></br>
         <br></br>
-        <input type="submit" className="pb-8" />
+        <input type="submit" className="bg-white p-2 text-black rounded-xl" />
       </form>
     </div>
   );
