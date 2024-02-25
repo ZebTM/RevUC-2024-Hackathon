@@ -3,36 +3,48 @@ import { useState } from 'react';
 // import { NextResponse } from 'next/server';
 // import { getAccessToken, withApiAuthRequired } from '@auth0/nextjs-auth0';
 
-// const GET = withApiAuthRequired(async function GET(req) {
-//   const res = new NextResponse();
-//   const { accessToken } = await getAccessToken(req, res);
-//   return accessToken;
-// });
+export default function MedicalForm() {
+  // Custom hook for fetching data
+  const useSymptomData = () => {
+    const [symptoms, setSymptoms] = useState([]);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://10.11.191.67:3000/symptomList');
-        if (response.status > 400) {
-          throw new Error('Failed to fetch data');
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://10.11.191.67:3000/symptomList');
+          if (!response.ok) {
+            throw new Error('Failed to fetch data');
+          }
+          const data = await response.json();
+          // Extracting names from the fetched data and updating state
+          setSymptoms(data.map(symptom => symptom.name));
+        } catch (error) {
+          setError(error.message || 'Error fetching data');
         }
-        const data = await response.json();
-        // Extracting names from the fetched data and updating state
-        setSymptoms(data.map(symptom => symptom.name));
-      } catch (error) {
-        setError(error.message || 'Error fetching data');
-      }
-    };
-  })
+      };
 
-// async function createHeader() {
-//   let x = await GET();
-//   const header = {'Header': `Bearer ${x}`};
-//   return header;
-// }
+      fetchData();
+    }, []);
 
-// /status
-async function MedicalForm() {
+    return { symptoms, error };
+  };
+
+  const { symptoms, error } = useSymptomData();
+  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedSymptoms([...selectedSymptoms, value]);
+    } else {
+      setSelectedSymptoms(selectedSymptoms.filter(symptom => symptom !== value));
+    }
+  };
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
   //let headers = await createHeader();
   //let retval = await fetch("http://10.11.191.67:3001/status");
   const [ symptomList, setSymptomList ] = useState( [] )
@@ -71,7 +83,7 @@ async function MedicalForm() {
         <input id="file" name="file" type="file" />
         <br/>
         <br/>
-        <input type="submit" className="bg-white p-1 text-black" />
+        <input type="submit" value="Submit" className="bg-white p-1 text-black" />
       </form>
     </div>
   );
