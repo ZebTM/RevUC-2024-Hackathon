@@ -4,16 +4,18 @@ import Link from 'next/link'
 export default function RootLayout({ children }) {
     return (
       <html lang="en">
-        <body className="bg-slate-700 text-white">
+        <body className="bg-slate-700 min-h-screen text-white">
           <main>
-            <nav>
-              <ul className="flex space-x-4 justify-center bg-slate-800 p-2"> 
-                <Link href="/"><li className="mb-4 hover:underline underline-offset-4 text-left w-44 inline"> Home </li></Link> 
-                <Link href="/medical_form"><li className="mb-4 hover:underline underline-offset-4 text-left w-44 inline"> Medical Form </li></Link> 
-                <Link href="/form_results"><li className="mb-4 hover:underline underline-offset-4 text-left w-44 inline"> Form Results </li></Link>
-                <a href="/api/auth/login">Login</a>   
-              </ul>
-            </nav>
+            <div className="flex p-2 w-full items-center bg-slate-800 justify-center">
+              <nav>
+                <ul className="flex space-x-4 h-8"> 
+                  <Link href="/"><li className="mb-4 hover:underline underline-offset-4 text-left inline pr-6"> Home </li></Link> 
+                  <Link href="/medical_form"><li className="mb-4 hover:underline underline-offset-4 text-left inline pl-6 pr-6"> Medical Form </li></Link> 
+                  <Link href="/form_results"><li className="mb-4 hover:underline underline-offset-4 text-left inline pl-6 pr-6"> Form Results </li></Link>
+                  <a href="/api/auth/login" className="mb-4 hover:underline underline-offset-4 text-left inline pl-6">Login</a>   
+                </ul>
+              </nav>
+            </div>
             <div>
               {children}
             </div>
