@@ -1,9 +1,12 @@
-//import Navbar from '.../comps/navbar';
+"use client"
+import React from 'react';
+
 export default function() {
   return (
     <div className>
       {/*<Navbar />*/}
-      <p className="text-red-700"> home page </p>
+      <p className="text-white"> home page </p>
+
     </div>
   );
 }
