@@ -1,15 +1,7 @@
 export default function medical_form() {
     return (
       <div className="flex justify-center pt-8 pb-8">
-        <form className="w-1/2 bg-slate-800 p-4 rounded-xl">
-          {/*<label for="fname">First Name: </label> 
-          <br></br>
-          <input type="text" id="fname" name="fname" className="text-black rounded-xl"></input>
-          <br></br>
-          <label for="lname">Last Name: </label>
-          <br></br>
-          <input type="text" id="lname" name="lname" className="text-black rounded-xl"></input>
-          <br></br>*/}
+        <form className="w-1/2 bg-slate-800 pl-14 pr-14 pt-4 rounded-xl">
           <label for="symptoms">Symptoms: </label>
           <br></br>
           <textarea name="symptoms" rows="10" cols="25" className="text-black rounded-xl"></textarea>

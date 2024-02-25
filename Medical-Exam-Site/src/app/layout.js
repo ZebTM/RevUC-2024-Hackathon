@@ -14,13 +14,8 @@ export default function RootLayout({ children }) {
                   <Link href="/"><li className="mb-4 hover:underline underline-offset-4 text-left inline pr-6"> Home </li></Link> 
                   <Link href="/medical_form"><li className="mb-4 hover:underline underline-offset-4 text-left inline pl-6 pr-6"> Medical Form </li></Link> 
                   <Link href="/form_results"><li className="mb-4 hover:underline underline-offset-4 text-left inline pl-6 pr-6"> Form Results </li></Link>
-<<<<<<< HEAD
-                  <Link href="/profile_client"><li className="mb-4 hover:underline underline-offset-4 text-left inline pl-6 pr-6"> Login Info </li></Link>
-                  <a href="/api/auth/login" className="mb-4 hover:underline underline-offset-4 text-left inline pl-6">Login</a>   
-=======
                   <Link href="/profile_client"><li className="mb-4 hover:underline underline-offset-4 text-left inline pl-6 pr-6"> Profile Client </li></Link>  
                   <a href="/api/auth/login" className="mb-4 hover:underline underline-offset-4 text-left inline pl-6">Login</a> 
->>>>>>> cef0f4be3ae05a8f838862b4bbde4e533e1b3159
                 </ul>
               </nav>
             </div>
