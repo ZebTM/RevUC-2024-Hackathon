@@ -2,27 +2,34 @@
 import React, { useState, useEffect } from 'react';
 
 export default function MedicalForm() {
-  const [symptoms, setSymptoms] = useState([]);
-  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
-  const [error, setError] = useState(null);
+  // Custom hook for fetching data
+  const useSymptomData = () => {
+    const [symptoms, setSymptoms] = useState([]);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://10.11.191.67:3000/symptomList');
-        if (response.status > 400) {
-          throw new Error('Failed to fetch data');
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://10.11.191.67:3000/symptomList');
+          if (!response.ok) {
+            throw new Error('Failed to fetch data');
+          }
+          const data = await response.json();
+          // Extracting names from the fetched data and updating state
+          setSymptoms(data.map(symptom => symptom.name));
+        } catch (error) {
+          setError(error.message || 'Error fetching data');
         }
-        const data = await response.json();
-        // Extracting names from the fetched data and updating state
-        setSymptoms(data.map(symptom => symptom.name));
-      } catch (error) {
-        setError(error.message || 'Error fetching data');
-      }
-    };
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }, []);
+
+    return { symptoms, error };
+  };
+
+  const { symptoms, error } = useSymptomData();
+  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
@@ -68,7 +75,7 @@ export default function MedicalForm() {
         <input id="file" name="file" type="file" />
         <br/>
         <br/>
-        <input type="submit" className="bg-white p-1 text-black" />
+        <input type="submit" value="Submit" className="bg-white p-1 text-black" />
       </form>
     </div>
   );
