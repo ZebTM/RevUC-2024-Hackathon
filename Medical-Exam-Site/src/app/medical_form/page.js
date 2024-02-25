@@ -68,7 +68,7 @@ export default function MedicalForm() {
         <input id="file" name="file" type="file" />
         <br/>
         <br/>
-        <input type="submit" className="bg-slate-800 p-2 rounded-xl" />
+        <input type="submit" className="bg-white p-2 text-black rounded-xl" />
       </form>
     </div>
   );
