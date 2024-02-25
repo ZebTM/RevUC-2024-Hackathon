@@ -54,17 +54,20 @@ export default function MedicalForm() {
     setNotes(e.target.value);
   }
   function symptomsSetter(e){
-    setSelectedSymptoms(e.target.value);
+    setSelectedSymptoms([...selectedSymptoms, e.target.value]);
   }
   function fileSetter(e){
     setFilePath(e.target.value);
   }
-  function handleSubmit(e){
+  async function handleSubmit(e){
+    e.preventDefault();
     let arrayOfSelectedSymptoms = JSON.stringify(selectedSymptoms);
-    let data = {"notes": notes,
-    "img_path": filepath,
-    "symptoms": arrayOfSelectedSymptoms}
-    fetch('http://10.11.191.67:3000/symptoms', 
+    let data = {
+      "notes": notes,
+      "img_path": filepath,
+      "symptoms": arrayOfSelectedSymptoms
+    }
+    await fetch('http://10.11.191.67:3000/symptoms', 
     {
       method: 'POST', 
       headers: {
@@ -77,7 +80,7 @@ export default function MedicalForm() {
 
   return (
     <div className="flex justify-center pt-8 pb-8">
-      <form className="w-1/2 bg-slate-700 pl-14 pr-14 pt-4 rounded-xl">
+      <form className="w-1/2 bg-slate-700 pl-14 pr-14 pt-4 rounded-xl" onSubmit={handleSubmit}>
         <br />
         <details className="text-black bg-white p-1 w-72" onChange={symptomsSetter}>
           <summary>Choose Symptoms</summary>
@@ -106,7 +109,7 @@ export default function MedicalForm() {
         <input id="file" name="file" type="file" onChange={fileSetter}/>
         <br/>
         <br/>
-        <input type="submit" value="Submit" onSubmit={handleSubmit} className="bg-white p-1 text-black" />
+        <input type="submit" value="Submit" className="bg-white p-1 text-black" />
       </form>
     </div>
   );
