@@ -1,8 +1,18 @@
 const express = require('express');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
+const cors = require('cors');
 const createHttpError = require('http-errors');
 require('dotenv').config()
+const { auth } = require('express-oauth2-jwt-bearer');
+const jwtCheck = auth({
+    audience: 'https://rev-uc-hackathon-2024/',
+    issuerBaseURL: 'https://dev-ddpqb1c20p7e8s47.us.auth0.com/',
+    tokenSigningAlg: 'RS256'
+  });
+
+
 
 const Pool = require('pg').Pool
 
@@ -25,6 +35,7 @@ const pool = new Pool({
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 
@@ -32,9 +43,11 @@ app.listen(PORT, () => {
     console.log("Server Listening on PORT:", PORT);
 });
 
+// app.use(jwtCheck);
+
   
   
-app.get('/status', (request, response) => {
+app.get('/status', jwtCheck, (request, response) => {
     const status = {
         'Status': 'Running'
     };
@@ -51,6 +64,28 @@ app.get('/symptoms', ( request, response) => {
         }
 
         response.status(200).json(results.rows)
+    })
+    
+})
+
+app.post('/symptoms', ( request, response) => {
+    //id UUID PRIMARY KEY,
+	// created_at TIMESTAMP NOT NULL,
+	// edited_at TIMESTAMP NOT NULL,
+	// patient_id UUID,
+	// notes TEXT,
+	// img_path TEXT
+    let { patient_id, notes, img_path, symptoms } = request.body;
+    let id = crypto.randomUUID();
+    let created_at = new Date();
+    query = 'INSERT INTO symptoms (id, created_at, patient_id, notes, img_path, symptoms ) VALUES ($1, $2, $3, $4, $5, $6 )';
+
+    pool.query(query, [id, created_at, patient_id, notes, img_path, symptoms ], (error, results ) => {
+        if ( error ) {
+            throw error
+        }
+
+        response.status(200).json({ "id": id, "created_at": created_at, "patient_id": patient_id, "symptoms": symptoms, "notes": notes, "img_path": img_path})
     })
     
 })
@@ -88,19 +123,19 @@ app.get('/accounts/:id', ( request, response) => {
 
 app.post('/accounts', ( request, response) => {
     try {
-        let { isAdmin, username, firstName, lastName } = request.body
+        let { isAdmin, username, firstName, lastName, email } = request.body
         
-        if (name === undefined) throw Error("Name not provided")
+        // if (name === undefined) throw Error("Name not provided")
         let id = crypto.randomUUID();
         let date = new Date();
 
-        query = `INSERT INTO trial ( \"${id}\", \"${name}\" )`;
-        console.log(query)
+        // query = `INSERT INTO trial ( \"${id}\", \"${name}\" )`;
+        // console.log(query)
         pool.query(`
-        INSERT INTO trial ( id, name, created_at)
-        VALUES ( $1, $2, $3 )
+        INSERT INTO accounts ( id, first_name, last_name, created_at, is_admin, username, email)
+        VALUES ( $1, $2, $3, $4, $5, $6, $7 )
         RETURNING *`
-        , [id, name, date], (error, results ) => {
+        , [id, firstName, lastName, date, isAdmin, username, email], (error, results ) => {
             if ( error ) {
                 throw error
             }
@@ -303,14 +338,20 @@ app.delete('/trials/:id', ( request, response) => {
 })
 
 app.get('/medicine', ( request, response) => {
-    query = 'SELECT * FROM medicines ';
-
-    pool.query(query, (error, results ) => {
-        if ( error ) {
-            throw error
-        }
-
-        response.status(200).json(results.rows)
-    })
+    
     
 })
+
+app.get('/symptomList', ( request, response ) => {
+    fs.readFile('symptom-api/symptoms.json', 'utf8', (err, data) => {
+        if (err) {
+          console.error('Error reading JSON file:', err);
+          response.status(500).send('Internal Server Error');
+          return;
+        }
+    
+        // Parse the JSON data
+        const jsonData = JSON.parse(data);
+        response.status(200).json(jsonData);
+    })
+});
